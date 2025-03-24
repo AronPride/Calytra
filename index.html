@@ -3,22 +3,24 @@
 <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-PJ1XFNJE00"></script>
-    <script src="p5.min.js"></script>
-    <script src="vanta.trunk.min.js"></script>
+    <script src="three.r134.min.js"></script>
+    <script src="vanta.dots.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            VANTA.TRUNK({
+            VANTA.DOTS({
                 el: "#home",
-                mouseControls: false,
-                touchControls: false,
+                mouseControls: true,
+                touchControls: true,
                 gyroControls: false,
                 minHeight: 200.00,
                 minWidth: 200.00,
-                scale: 2.0,
+                scale: 1.00,
                 scaleMobile: 1.00,
-                spacing: 1.0,
-                chaos: 7.0
-            });
+                color: 0x1c40b9,
+                size: 10.30,
+                spacing: 25.00,
+                showLines: false
+            })
         });
     </script>
 
@@ -64,7 +66,7 @@
             <li><a href="#home">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#services">Services</a></li>
-            <li><a href="#process">On Demand</a></li>
+            <li><a href="#process">Our Team</a></li>
             <li><a href="#insights">Insights</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
@@ -128,13 +130,13 @@
             <div class="grid-item">
                 <h3>Quality & Compliance</h3>
                 <p>
-                    Implement quality systems that adhere to international standards, minimizing risk and ensuring excellence.
+                    ISO 14971, ISO 13485, ISO 10993, ISO 11607, ISO 11135, IEC 60601, 21 CFR 820, SOR/98-282
                 </p>
             </div>
             <div class="grid-item">
-                <h3>Market Strategy</h3>
+                <h3>Packaging Solutions</h3>
                 <p>
-                    Comprehensive market analysis and commercialization strategies tailored to your unique product and market.
+                    Tailored solutions to decrease time to market, ensure shelf-life and microbial barrier, while maintaining easy paths to validation.
                 </p>
             </div>
         </div>
@@ -144,10 +146,21 @@
 <!-- Process Section -->
 <section id="process">
     <div class="container">
-        <h2>Consultants on Demand</h2>
-        <p>
-            We recognize that needs are elastic and every moment counts—our on-demand consultants deliver agile, expert solutions to ignite your innovation.
-        </p>
+        <h2>Our Team</h2>
+        <div class="grid">
+            <div class="grid-item team-member">
+                <h3>E. Aaron Cohen, MBA</h3>
+                <p>
+                    Medtech executive with 10+ approved IDEs, multiple global regulatory approvals, and a decade driving innovation in complex regulatory landscapes. Former VP at an ISO 13485–certified MN Cup winner. Previously managed $80M/year in annual tech dev at a Fortune 100.
+                </p>
+            </div>
+            <div class="grid-item team-member">
+                <h3>Dr. Heidi Vesterinen</h3>
+                <p>
+                    Veterinary public health expert with a track record of supporting preclinical strategy, regulatory compliance, and global study design at a Fortune 100. DACVPM-certified with a dual DVM/MPH background and expertise in GLP, AALAC, and IACUC frameworks..
+                </p>
+            </div>
+        </div>
     </div>
 </section>
 
