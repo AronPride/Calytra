@@ -5,39 +5,45 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-PJ1XFNJE00"></script>
     <script src="three.r134.min.js"></script>
     <script src="vanta.rings.min.js"></script>
-    <script>
-VANTA.RINGS && VANTA.RINGS.prototype && (VANTA.RINGS.prototype.colors = [
-  0x1c40b9, // main brand blue
-  0x1538a0, // slightly deeper
-  0x0f2f85, // cooler tone
-  0x0a256c  // darkest edge blue
-]);
+ <script>
+const forceBluePalette = () => {
+  const blues = [
+    0x1c40b9, 0x1538a0, 0x102f87, 0x0a256c, 0x071d57
+  ];
+  const oldGenRing = VANTA.RINGS.prototype.genRing;
+  VANTA.RINGS.prototype.genRing = function (color, ...rest) {
+    const forcedColor = blues[Math.floor(Math.random() * blues.length)];
+    return oldGenRing.call(this, forcedColor, ...rest);
+  };
+};
+forceBluePalette();
 </script>
+
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    VANTA.RINGS({
-        el: "#home",
-        mouseControls: true,
-        touchControls: true,
-        gyroControls: false,
-        minHeight: 200.00,
-        minWidth: 200.00,
-        scale: 1.00,
-        scaleMobile: 1.00,
-        backgroundColor: 0x000000,
-        color: 0x1c40b9,
-        color2: 0x1c40b9,
-        THREE: THREE, // enforce version
-        onInit: function() {
-            if (this.cont) {
-                this.cont.position.x = 60;
-            }
-            if (this.camera) {
-                this.camera.position.x = 60;
-                this.camera.lookAt(new THREE.Vector3(0, 25, 7));
-            }
-        }
-    });
+  VANTA.RINGS({
+    el: "#home",
+    mouseControls: true,
+    touchControls: true,
+    gyroControls: false,
+    minHeight: 200.00,
+    minWidth: 200.00,
+    scale: 1.00,
+    scaleMobile: 1.00,
+    backgroundColor: 0x000000,
+    color: 0x1c40b9,
+    color2: 0x1c40b9,
+    THREE: THREE,
+    onInit: function () {
+      if (this.cont) {
+        this.cont.position.x = 60;
+      }
+      if (this.camera) {
+        this.camera.position.x = 60;
+        this.camera.lookAt(new THREE.Vector3(0, 25, 7));
+      }
+    }
+  });
 });
 </script>
 
