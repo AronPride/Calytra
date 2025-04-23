@@ -22,32 +22,50 @@ document.addEventListener("DOMContentLoaded", function () {
         scale: 1.00,
         scaleMobile: 1.00,
         backgroundColor: 0x000000,
-        color: 0x1c40b9,
-        color2: 0x1c40b9 // override backup color as well
+        color: 0x1c40b9, // fallback
+        color2: 0x1c40b9
     });
 
-    // Wait a tick and then patch colors + center offset
     setTimeout(() => {
         const blues = [
-            0x1c40b9, 0x163a9f, 0x102f87, 0x0a256c, 0x071d57
+            new THREE.Color(0x1c40b9),
+            new THREE.Color(0x1538a0),
+            new THREE.Color(0x0f2f85),
+            new THREE.Color(0x0a256c)
         ];
 
         if (vanta.rings) {
-            for (let ring of vanta.rings) {
+            vanta.rings.forEach(ring => {
                 const mat = ring.material;
-                mat.color.set(blues[Math.floor(Math.random() * blues.length)]);
-                mat.opacity = Math.random() * 0.2 + 0.1;
-            }
+                const blue = blues[Math.floor(Math.random() * blues.length)];
+                mat.color = blue;
+                mat.opacity = 0.25 + Math.random() * 0.1;
+                mat.transparent = true;
+                mat.needsUpdate = true;
+            });
         }
 
+        // Re-center scene to the right
         if (vanta.cont) {
-            vanta.cont.position.x = 60; // right shift
+            vanta.cont.position.x = 60;
             vanta.cont.rotation.z = 0.2;
         }
 
+        // Shift camera as well
         if (vanta.camera) {
             vanta.camera.position.x = 60;
-            vanta.camera.lookAt(0, 25, 0);
+            vanta.camera.lookAt(0, 25, 7);
+        }
+
+        // Dim the lighting a bit (if present)
+        if (vanta.spot) vanta.spot.intensity = 0.5;
+        if (vanta.pointLight) vanta.pointLight.intensity = 0.6;
+        if (vanta.scene && vanta.scene.children) {
+            vanta.scene.children.forEach(child => {
+                if (child.isLight && child.intensity > 0.6) {
+                    child.intensity = 0.4;
+                }
+            });
         }
     }, 100);
 });
