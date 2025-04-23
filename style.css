@@ -418,3 +418,14 @@ footer {
         transform: scale(1.1);
     }
 
+#home canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+#home .content {
+    position: relative;
+    z-index: 2;
+}
+
