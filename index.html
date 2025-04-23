@@ -4,106 +4,22 @@
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-PJ1XFNJE00"></script>
     <script src="three.r134.min.js"></script>
+    <script src="vanta.rings.min.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    const container = document.getElementById("home");
-    container.style.position = 'relative';
-    container.style.background = '#000';
-    container.style.overflow = 'hidden';
-    container.style.height = '470px';
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / 470, 1, 1000);
-    camera.position.set(0, 100, 200);
-
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.setSize(window.innerWidth, 470);
-    renderer.setPixelRatio(window.devicePixelRatio);
-    container.appendChild(renderer.domElement);
-
-    const group = new THREE.Group();
-    scene.add(group);
-
-    const ringSpecs = [
-        { radius: 30.83, thickness: 0.99, arc: 2.57, rotZ: 5.93, y: 15.65, speed: 0.0030 },
-        { radius: 52.31, thickness: 0.91, arc: 2.90, rotZ: 2.18, y: -17.20, speed: 0.0018 },
-        { radius: 12.98, thickness: 0.78, arc: 4.15, rotZ: 0.12, y: 2.88, speed: 0.0020 },
-        { radius: 48.61, thickness: 0.47, arc: 5.59, rotZ: 3.89, y: 8.49, speed: 0.0024 },
-        { radius: 25.64, thickness: 0.95, arc: 5.02, rotZ: 0.88, y: -27.09, speed: 0.0018 },
-        { radius: 39.00, thickness: 0.70, arc: 3.70, rotZ: 1.44, y: 10.00, speed: 0.0022 },
-        { radius: 55.20, thickness: 0.60, arc: 4.50, rotZ: 4.12, y: -10.80, speed: 0.0021 },
-        { radius: 18.25, thickness: 0.85, arc: 3.20, rotZ: 0.65, y: 20.00, speed: 0.0026 },
-        { radius: 45.00, thickness: 0.95, arc: 5.10, rotZ: 2.90, y: -5.00, speed: 0.0025 },
-        { radius: 22.00, thickness: 0.65, arc: 2.80, rotZ: 1.80, y: 25.00, speed: 0.0032 },
-        { radius: 34.60, thickness: 0.75, arc: 4.00, rotZ: 0.33, y: -20.00, speed: 0.0029 },
-        { radius: 15.00, thickness: 0.55, arc: 3.00, rotZ: 5.50, y: 5.00, speed: 0.0023 }
-    ];
-
-    const baseColor = new THREE.Color(0x1c40b9);
-
-    ringSpecs.forEach(spec => {
-        const shape = new THREE.Shape();
-        shape.absarc(0, 0, spec.radius, 0, spec.arc, false);
-        shape.lineTo(spec.radius - spec.thickness, 0);
-        shape.absarc(0, 0, spec.radius - spec.thickness, spec.arc, 0, true);
-        shape.closePath();
-
-        const extrudeSettings = {
-            depth: 0.4,
-            bevelEnabled: false,
-            curveSegments: 64
-        };
-
-        const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
-        const material = new THREE.MeshLambertMaterial({
-            color: baseColor,
-            transparent: true,
-            opacity: 0.3
-        });
-
-        const mesh = new THREE.Mesh(geometry, material);
-        mesh.rotation.x = Math.PI / 2;
-        mesh.rotation.z = spec.rotZ;
-        mesh.position.y = spec.y;
-        mesh.userData.speed = spec.speed;
-
-        group.add(mesh);
-    });
-
-    const ambient = new THREE.AmbientLight(0xffffff, 0.5);
-    scene.add(ambient);
-
-    const pointLight = new THREE.PointLight(0xffffff, 1);
-    pointLight.position.set(0, 150, 200);
-    scene.add(pointLight);
-
-    let mouseX = 0, mouseY = 0;
-    document.addEventListener("mousemove", function (e) {
-        mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-        mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-    });
-
-    function animate() {
-        requestAnimationFrame(animate);
-
-        group.children.forEach(mesh => {
-            mesh.rotation.z += mesh.userData.speed;
-        });
-
-        camera.position.x += (mouseX * 30 - camera.position.x) * 0.05;
-        camera.position.y += (-mouseY * 20 + 100 - camera.position.y) * 0.05;
-        camera.lookAt(new THREE.Vector3(0, 0, 0));
-
-        renderer.render(scene, camera);
-    }
-
-    animate();
-
-    window.addEventListener("resize", () => {
-        camera.aspect = window.innerWidth / 470;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, 470);
-    });
+    VANTA.RINGS({
+        el: "#home",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.00,
+        minWidth: 200.00,
+        scale: 1.00,
+        scaleMobile: 1.00,
+        backgroundColor: 0x000000, // black background
+        color: 0x1c40b9,            // your deep blue
+        color2: 0x0d1f66            // darker variant of your blue for subtle contrast
+    })
 });
 </script>
 
