@@ -5,20 +5,6 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-PJ1XFNJE00"></script>
     <script src="three.r134.min.js"></script>
     <script src="vanta.rings.min.js"></script>
- <script>
-const forceBluePalette = () => {
-  const blues = [
-    0x1c40b9, 0x1538a0, 0x102f87, 0x0a256c, 0x071d57
-  ];
-  const oldGenRing = VANTA.RINGS.prototype.genRing;
-  VANTA.RINGS.prototype.genRing = function (color, ...rest) {
-    const forcedColor = blues[Math.floor(Math.random() * blues.length)];
-    return oldGenRing.call(this, forcedColor, ...rest);
-  };
-};
-forceBluePalette();
-</script>
-
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   VANTA.RINGS({
