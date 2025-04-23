@@ -7,7 +7,12 @@
     <script src="vanta.rings.min.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    VANTA.RINGS({
+    if (!window.VANTA || !VANTA.RINGS) {
+        console.error("VANTA.RINGS is not available");
+        return;
+    }
+
+    const vanta = VANTA.RINGS({
         el: "#home",
         mouseControls: true,
         touchControls: true,
@@ -16,10 +21,35 @@ document.addEventListener("DOMContentLoaded", function () {
         minWidth: 200.00,
         scale: 1.00,
         scaleMobile: 1.00,
-        backgroundColor: 0x000000, // black background
-        color: 0x1c40b9,            // your deep blue
-        color2: 0x0d1f66            // darker variant of your blue for subtle contrast
-    })
+        backgroundColor: 0x000000,
+        color: 0x1c40b9,
+        color2: 0x1c40b9 // override backup color as well
+    });
+
+    // Wait a tick and then patch colors + center offset
+    setTimeout(() => {
+        const blues = [
+            0x1c40b9, 0x163a9f, 0x102f87, 0x0a256c, 0x071d57
+        ];
+
+        if (vanta.rings) {
+            for (let ring of vanta.rings) {
+                const mat = ring.material;
+                mat.color.set(blues[Math.floor(Math.random() * blues.length)]);
+                mat.opacity = Math.random() * 0.2 + 0.1;
+            }
+        }
+
+        if (vanta.cont) {
+            vanta.cont.position.x = 60; // right shift
+            vanta.cont.rotation.z = 0.2;
+        }
+
+        if (vanta.camera) {
+            vanta.camera.position.x = 60;
+            vanta.camera.lookAt(0, 25, 0);
+        }
+    }, 100);
 });
 </script>
 
