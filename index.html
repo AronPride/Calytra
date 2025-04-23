@@ -5,14 +5,17 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-PJ1XFNJE00"></script>
     <script src="three.r134.min.js"></script>
     <script src="vanta.rings.min.js"></script>
+    <script>
+VANTA.RINGS && VANTA.RINGS.prototype && (VANTA.RINGS.prototype.colors = [
+  0x1c40b9, // main brand blue
+  0x1538a0, // slightly deeper
+  0x0f2f85, // cooler tone
+  0x0a256c  // darkest edge blue
+]);
+</script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    if (!window.VANTA || !VANTA.RINGS) {
-        console.error("VANTA.RINGS is not available");
-        return;
-    }
-
-    const vanta = VANTA.RINGS({
+    VANTA.RINGS({
         el: "#home",
         mouseControls: true,
         touchControls: true,
@@ -23,43 +26,18 @@ document.addEventListener("DOMContentLoaded", function () {
         scaleMobile: 1.00,
         backgroundColor: 0x000000,
         color: 0x1c40b9,
-        color2: 0x1c40b9
+        color2: 0x1c40b9,
+        THREE: THREE, // enforce version
+        onInit: function() {
+            if (this.cont) {
+                this.cont.position.x = 60;
+            }
+            if (this.camera) {
+                this.camera.position.x = 60;
+                this.camera.lookAt(new THREE.Vector3(0, 25, 7));
+            }
+        }
     });
-
-    setTimeout(() => {
-        const visibleBlues = [
-            new THREE.Color(0x1c40b9),
-            new THREE.Color(0x274fc2),
-            new THREE.Color(0x1938a8)
-        ];
-
-        if (vanta.rings) {
-            vanta.rings.forEach(ring => {
-                const mat = ring.material;
-                const blue = visibleBlues[Math.floor(Math.random() * visibleBlues.length)];
-                mat.color = blue;
-                mat.opacity = 0.5;
-                mat.transparent = true;
-                mat.needsUpdate = true;
-            });
-        }
-
-        // Shift the entire group to the right
-        if (vanta.cont) {
-            vanta.cont.position.x = 60;
-        }
-
-        // Shift the camera right too
-        if (vanta.camera) {
-            vanta.camera.position.x = 60;
-            vanta.camera.lookAt(new THREE.Vector3(0, 25, 7));
-        }
-
-        // Ensure lights aren't too dim
-        if (vanta.pointLight) vanta.pointLight.intensity = 1;
-        if (vanta.spot) vanta.spot.intensity = 1;
-        if (vanta.ambientLight) vanta.ambientLight.intensity = 0.8;
-    }, 300);
 });
 </script>
 
